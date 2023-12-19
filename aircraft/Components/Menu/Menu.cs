@@ -1,0 +1,105 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using aircraft.Routers;
+using aircraft.Helpers;
+namespace aircraft.Components.Menu
+{
+    public class Menu
+    {
+        public Menu ()
+        {
+            new Config();
+        }
+
+        public static int MainMenu(string message = "")
+        {
+            PrintCenteredMenu("MENU", Config.MAIN_MENU_LIST.ToArray(), message);
+            string userInput = Console.ReadLine();
+            if (Common.IsNumeric(userInput))
+            {
+                int choice = int.Parse(userInput);
+
+                if (!Common.checkIsQuit(choice))
+                {
+                    if (CheckValidSelectMenu(choice, Config.MAIN_MENU_LIST))
+                    {
+                        return choice;
+                    }
+                    else
+                    {
+                        MainMenu("Lua chon khong hop le");
+                    }
+                }
+            }
+            else
+            {
+                MainMenu("Lua chon khong hop le");
+            }
+            return 1;
+        }
+
+        static void PrintCenteredMenu(string title, string[] options, string message = "")
+        {
+            Console.Clear();
+
+            int windowHeight = Console.WindowHeight;
+            int windowWidth = Console.WindowWidth;
+
+            int titleTop = windowHeight / 2 - (options.Length + 3) / 2;
+
+            string line = "+------------------------------------------------+";
+
+            int linePadLeft = (windowWidth - line.Length) / 2;
+
+            Console.SetCursorPosition(linePadLeft, titleTop - 1);
+            Console.WriteLine(line);
+
+            Console.SetCursorPosition(linePadLeft, titleTop);
+            Console.WriteLine("|");
+            Console.SetCursorPosition((windowWidth - title.Length) / 2, titleTop);
+            Console.WriteLine(title);
+            Console.SetCursorPosition(linePadLeft + (line.Length - 1), titleTop);
+            Console.WriteLine("|");
+
+            Console.SetCursorPosition(linePadLeft, titleTop + 1);
+            Console.WriteLine(line);
+
+            int maxLength = Common.GetMaxLengthString(options);
+
+            foreach (var option in options)
+            {
+                Console.SetCursorPosition(linePadLeft, Console.CursorTop);
+                Console.WriteLine(PadSidesMenu($"{option}"));
+                Console.SetCursorPosition(linePadLeft, Console.CursorTop);
+                Console.WriteLine(line);
+            }
+
+            if (message != "")
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition((windowWidth - maxLength) / 2, Console.CursorTop + 1);
+                Console.Write(message);
+                Console.ResetColor();
+            }
+
+            Console.SetCursorPosition((windowWidth - maxLength) / 2, Console.CursorTop + (message != "" ? 2 : 1));
+            Console.Write("Chon chuc nang: ");
+        }
+
+        private static string PadSidesMenu(string str)
+        {
+            str = str.PadRight(25, ' ');
+            return $"|{Common.padSides(str, 48)}|";
+        }
+
+        public static bool CheckValidSelectMenu(int key, List<string> list)
+        {
+            if (key >= 0 && key <= list.Count() - 1)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+}

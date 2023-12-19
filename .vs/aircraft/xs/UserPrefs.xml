@@ -1,0 +1,45 @@
+﻿<Properties StartupConfiguration="{F8FF397C-5BC9-4DC7-8F56-E57E3CB9F734}|Default">
+  <MonoDevelop.Ide.ItemProperties.aircraft PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="aircraft/Databases/Init.cs">
+    <Files>
+      <File FileName="aircraft/Program.cs" Line="12" Column="43" IsPinned="True" />
+      <File FileName="aircraft/Routers/router.cs" Line="24" Column="24" IsPinned="True" />
+      <File FileName="aircraft/Models/Airplane.cs" Line="10" Column="1" />
+      <File FileName="aircraft/Services/Airplane/AirplaneManagement.cs" Line="12" Column="1" />
+      <File FileName="aircraft/Databases/Airplane/Airplane.cs" Line="13" Column="22" />
+      <File FileName="aircraft/Databases/Init.cs" Line="30" Column="1" />
+      <File FileName="aircraft/Databases/Auth/Admin.cs" Line="22" Column="42" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="aircraft" expanded="True">
+            <Node name="aircraft" expanded="True">
+              <Node name="Components" expanded="True">
+                <Node name="Menu" expanded="True" />
+              </Node>
+              <Node name="Databases" expanded="True">
+                <Node name="Airplanes" expanded="True" />
+                <Node name="Auth" expanded="True" />
+                <Node name="Init.cs" selected="True" />
+              </Node>
+              <Node name="Helpers" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Routers" expanded="True" />
+              <Node name="Services" expanded="True">
+                <Node name="Airplane" expanded="True" />
+                <Node name="Auth" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|anycpu" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -1,0 +1,6 @@
+/Users/phuongnguyen/Desktop/aircraft/aircraft/bin/Debug/aircraft.exe
+/Users/phuongnguyen/Desktop/aircraft/aircraft/bin/Debug/aircraft.pdb
+/Users/phuongnguyen/Desktop/aircraft/aircraft/obj/Debug/aircraft.csproj.AssemblyReference.cache
+/Users/phuongnguyen/Desktop/aircraft/aircraft/obj/Debug/aircraft.csproj.CoreCompileInputs.cache
+/Users/phuongnguyen/Desktop/aircraft/aircraft/obj/Debug/aircraft.exe
+/Users/phuongnguyen/Desktop/aircraft/aircraft/obj/Debug/aircraft.pdb

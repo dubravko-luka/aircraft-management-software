@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">anycpu</Platform>
+    <ProjectGuid>{F8FF397C-5BC9-4DC7-8F56-E57E3CB9F734}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>aircraft</RootNamespace>
+    <AssemblyName>aircraft</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|anycpu' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|anycpu' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Databases\Auth\Admin.cs" />
+    <Compile Include="Services\Auth\UserInterface.cs" />
+    <Compile Include="Services\Auth\AdminLogin.cs" />
+    <Compile Include="Helpers\Common.cs" />
+    <Compile Include="Routers\router.cs" />
+    <Compile Include="Components\Menu\Menu.cs" />
+    <Compile Include="Components\Menu\Config.cs" />
+    <Compile Include="Helpers\Constants.cs" />
+    <Compile Include="Models\Airplane.cs" />
+    <Compile Include="Services\Airplane\AirplaneManagement.cs" />
+    <Compile Include="Databases\Airplanes\Airplane.cs" />
+    <Compile Include="Databases\Init.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Databases\" />
+    <Folder Include="Databases\Auth\" />
+    <Folder Include="Services\Auth\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Routers\" />
+    <Folder Include="Components\" />
+    <Folder Include="Components\Menu\" />
+    <Folder Include="Models\" />
+    <Folder Include="Services\Airplane\" />
+    <Folder Include="Databases\Airplanes\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
