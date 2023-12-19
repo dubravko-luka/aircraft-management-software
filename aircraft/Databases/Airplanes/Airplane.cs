@@ -8,7 +8,7 @@ namespace aircraft.Databases.Airplanes.Airplane
     public class Airplane
     {
         // Airplanes
-        private const string filePath = "Airplanes.txt";
+        public const string filePath = "Airplanes.txt";
 
         public static void GenerateRandomAirplanes()
         {

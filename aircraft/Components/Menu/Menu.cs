@@ -39,6 +39,36 @@ namespace aircraft.Components.Menu
             return 1;
         }
 
+        public static int AirplaneMenu(string message = "")
+        {
+            PrintCenteredMenu("Quan ly may bay", Config.AIRPLANE_MENU_LIST.ToArray(), message);
+            string userInput = Console.ReadLine();
+            if (Common.IsNumeric(userInput))
+            {
+                int choice = int.Parse(userInput);
+
+                if (Common.checkIsBack(choice))
+                {
+                    return 0;
+                } else
+                {
+                    if (CheckValidSelectMenu(choice, Config.AIRPLANE_MENU_LIST))
+                    {
+                        return choice;
+                    }
+                    else
+                    {
+                        AirplaneMenu("Lua chon khong hop le");
+                    }
+                }
+            }
+            else
+            {
+                AirplaneMenu("Lua chon khong hop le");
+            }
+            return 0;
+        }
+
         static void PrintCenteredMenu(string title, string[] options, string message = "")
         {
             Console.Clear();

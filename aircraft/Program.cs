@@ -13,7 +13,8 @@ namespace aircraft
 
             //if (Services.Auth.AdminLogin.Login())
             //{
-                Routers.router.Direction();
+                new Routers.router();
+                Routers.router.DirectionMainMenu();
             //}
         }
     }

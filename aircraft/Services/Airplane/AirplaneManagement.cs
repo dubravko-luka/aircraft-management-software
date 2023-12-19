@@ -1,5 +1,6 @@
 ﻿using System;
 using aircraft.Models;
+using aircraft.Helpers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,35 @@ namespace aircraft.Services.Airplane
     {
         private const string filePath = "Airplanes.txt";
 
-        public List<Models.Airplane> GetAirplaneList()
+        public static void GetAirplaneList()
+        {
+            List<Models.Airplane> airplaneList = _GetAirplaneList();
+
+            if (airplaneList != null && airplaneList.Count > 0)
+            {
+                string[] headers = { "So hieu may bay", "So cho ngoi" };
+                string[,] rowData = new string[airplaneList.Count, 2];
+
+                for (int i = 0; i < airplaneList.Count; i++)
+                {
+                    rowData[i, 0] = airplaneList[i].PlaneCode;
+                    rowData[i, 1] = airplaneList[i].SeatCount.ToString();
+                }
+
+                DrawTable(headers, rowData);
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Không có dữ liệu máy bay.");
+                Console.ResetColor();
+            }
+
+            Common.printStringCenterAfterNoBreak("An phim bat ki de tro ve!");
+            Console.ReadKey();
+        }
+
+        private static List<Models.Airplane> _GetAirplaneList()
         {
             List<Models.Airplane> airplaneList = new List<Models.Airplane>();
 
@@ -43,11 +72,89 @@ namespace aircraft.Services.Airplane
             return airplaneList;
         }
 
-        public Models.Airplane GetAirplaneDetails(string code)
+        public static void GetAirplaneDetails()
         {
-            List<Models.Airplane> airplaneList = GetAirplaneList();
+            bool continute = true;
+            int windowHeight = Console.WindowHeight;
+            int windowWidth = Console.WindowWidth;
+
+            do
+            {
+                Console.Clear();
+                GetAirplaneList();
+                Common.printStringCenterAfterNoBreak("Nhap ma may bay: ");
+                string code = Console.ReadLine();
+                Models.Airplane airplane = _GetAirplaneDetails(code);
+
+                Console.Clear();
+                Console.SetCursorPosition(windowWidth / 2, windowHeight / 2);
+                Console.WriteLine(" ");
+
+                if (airplane != null)
+                {
+                    string[] data = { $"So hieu may bay: {airplane.PlaneCode}", $"So cho ngoi: {airplane.SeatCount}" };
+                    Common.PrintCentered($"Thong tin chi tiet may bay ma so {code}", data);
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Common.printStringCenterAfter($"Khong tim thay du lieu!", 0);
+                    Console.ResetColor();
+                }
+                bool inpubtValid = false;
+                do
+                {
+                    Common.printStringCenterAfterNoBreak($"Tiep tuc (y/n): ", 2);
+                    string choice = Console.ReadLine();
+                    if (choice == "Y" || choice == "y")
+                    {
+                        inpubtValid = true;
+                    }
+                    if (choice == "N" || choice == "n")
+                    {
+                        inpubtValid = true;
+                        continute = false;
+                    }
+                } while (!inpubtValid);
+
+            } while (continute);
+        }
+
+        private static Models.Airplane _GetAirplaneDetails(string code)
+        {
+            List<Models.Airplane> airplaneList = _GetAirplaneList();
             Models.Airplane airplane = airplaneList.FirstOrDefault(ap => ap.PlaneCode == code);
             return airplane;
+        }
+
+        static void DrawTable(string[] headers, string[,] rowData)
+        {
+            int columns = headers.Length;
+            int rows = rowData.GetLength(0);
+            int rowLength = (columns * 24) + (columns + 1);
+
+            string horizontalLine = "+" + new string('-', rowLength - 2) + "+";
+            string headerRow = "|";
+
+            foreach (string header in headers)
+            {
+                headerRow += Common.padSides(header, 24) + "|";
+            }
+
+            Common.printStringCenterAfter(horizontalLine, 0);
+            Common.printStringCenterAfter(headerRow, 0);
+            Common.printStringCenterAfter(horizontalLine, 0);
+
+            for (int i = 0; i < rows; i++)
+            {
+                string dataRow = "|";
+                for (int j = 0; j < columns; j++)
+                {
+                    dataRow += Common.padSides(rowData[i, j], 24) + "|";
+                }
+                Common.printStringCenterAfter(dataRow, 0);
+                Common.printStringCenterAfter(horizontalLine, 0);
+            }
         }
     }
 }

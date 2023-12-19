@@ -65,6 +65,16 @@ namespace aircraft.Helpers
             return false;
         }
 
+        public static bool checkIsBack(int key)
+        {
+            if (isQuit(key))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool isQuit(int key)
         {
             if (key == Constants.KEY_QUIT)
@@ -73,6 +83,71 @@ namespace aircraft.Helpers
             }
 
             return false;
+        }
+
+        public static void printStringCenterAfterNoBreak (string str, int paddingTop = 2)
+        {
+            int windowWidth = Console.WindowWidth;
+            Console.SetCursorPosition((windowWidth - str.Length) / 2, Console.CursorTop + paddingTop);
+            Console.Write(str);
+        }
+
+        public static void printStringCenterAfter(string str, int paddingTop = 2)
+        {
+            int windowWidth = Console.WindowWidth;
+            Console.SetCursorPosition((windowWidth - str.Length) / 2, Console.CursorTop + paddingTop);
+            Console.WriteLine(str);
+        }
+
+        public static void PrintCentered(string title, string[] options, string message = "")
+        {
+            Console.Clear();
+
+            int windowHeight = Console.WindowHeight;
+            int windowWidth = Console.WindowWidth;
+
+            int titleTop = windowHeight / 2 - (options.Length + 3) / 2;
+
+            string line = "+------------------------------------------------+";
+
+            int linePadLeft = (windowWidth - line.Length) / 2;
+
+            Console.SetCursorPosition(linePadLeft, titleTop - 1);
+            Console.WriteLine(line);
+
+            Console.SetCursorPosition(linePadLeft, titleTop);
+            Console.WriteLine("|");
+            Console.SetCursorPosition((windowWidth - title.Length) / 2, titleTop);
+            Console.WriteLine(title);
+            Console.SetCursorPosition(linePadLeft + (line.Length - 1), titleTop);
+            Console.WriteLine("|");
+
+            Console.SetCursorPosition(linePadLeft, titleTop + 1);
+            Console.WriteLine(line);
+
+            int maxLength = Common.GetMaxLengthString(options);
+
+            foreach (var option in options)
+            {
+                Console.SetCursorPosition(linePadLeft, Console.CursorTop);
+                Console.WriteLine(PadSidesMenu($"{option}"));
+                Console.SetCursorPosition(linePadLeft, Console.CursorTop);
+                Console.WriteLine(line);
+            }
+
+            if (message != "")
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition((windowWidth - maxLength) / 2, Console.CursorTop + 1);
+                Console.Write(message);
+                Console.ResetColor();
+            }
+        }
+
+        private static string PadSidesMenu(string str)
+        {
+            str = str.PadRight(25, ' ');
+            return $"|{padSides(str, 48)}|";
         }
     }
 }

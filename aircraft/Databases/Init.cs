@@ -10,7 +10,8 @@ namespace aircraft.Databases
         public static void generateData()
         {
             checkAdminData();
-            GenerateData();
+            checkAirplaneData();
+            //GenerateData();
         }
 
         private static void checkAdminData ()
@@ -30,11 +31,7 @@ namespace aircraft.Databases
                         break;
                     }
                 }
-                if (validData)
-                {
-                    //
-                }
-                else
+                if (!validData)
                 {
                     File.Delete(filePath);
                     Auth.Admin.Admin.GenerateAdminFile();
@@ -43,6 +40,15 @@ namespace aircraft.Databases
             else
             {
                 Auth.Admin.Admin.GenerateAdminFile();
+            }
+        }
+
+        private static void checkAirplaneData()
+        {
+            string filePath = Airplanes.Airplane.Airplane.filePath;
+            if (!File.Exists(filePath))
+            {
+                Airplanes.Airplane.Airplane.GenerateRandomAirplanes();
             }
         }
 
