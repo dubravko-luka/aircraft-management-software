@@ -1,12 +1,16 @@
 ﻿<Properties StartupConfiguration="{F8FF397C-5BC9-4DC7-8F56-E57E3CB9F734}|Default">
   <MonoDevelop.Ide.ItemProperties.aircraft PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="aircraft/Services/Airplane/AirplaneManagement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="aircraft/Services/Auth/AdminLogin.cs">
     <Files>
-      <File FileName="aircraft/Services/Airplane/AirplaneManagement.cs" Line="50" Column="18" />
-      <File FileName="aircraft/Helpers/Common.cs" Line="102" Column="16" />
+      <File FileName="aircraft/Services/Airplane/AirplaneManagement.cs" Line="34" Column="56" />
+      <File FileName="aircraft/Helpers/Common.cs" />
       <File FileName="aircraft/Components/Menu/Menu.cs" />
       <File FileName="aircraft/Helpers/Constants.cs" />
-      <File FileName="aircraft/Routers/router.cs" Line="70" Column="37" />
+      <File FileName="aircraft/Routers/router.cs" />
+      <File FileName="aircraft/Databases/Init.cs" />
+      <File FileName="aircraft/Program.cs" />
+      <File FileName="aircraft/Services/Auth/AdminLogin.cs" Line="34" Column="18" />
+      <File FileName="aircraft/Services/Auth/UserInterface.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -24,10 +28,10 @@
               <Node name="Models" expanded="True" />
               <Node name="Routers" expanded="True" />
               <Node name="Services" expanded="True">
-                <Node name="Airplane" expanded="True">
-                  <Node name="AirplaneManagement.cs" selected="True" />
+                <Node name="Airplane" expanded="True" />
+                <Node name="Auth" expanded="True">
+                  <Node name="AdminLogin.cs" selected="True" />
                 </Node>
-                <Node name="Auth" expanded="True" />
               </Node>
             </Node>
           </Node>

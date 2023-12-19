@@ -28,14 +28,14 @@ namespace aircraft.Services.Auth
 
         public static string GetUsername(int left, int top)
         {
-            Console.SetCursorPosition(left + 3, top + 1);
+            Console.SetCursorPosition(left + 3, top + 3);
             return Console.ReadLine();
         }
 
         public static string GetMaskedPassword(int left, int top)
         {
             string password = "";
-            Console.SetCursorPosition(left + 3, top + 1);
+            Console.SetCursorPosition(left + 3, top + 5);
             ConsoleKeyInfo keyInfo;
 
             do
@@ -58,16 +58,20 @@ namespace aircraft.Services.Auth
             return password;
         }
 
-        public static void DrawCenteredInputFields(int width, int height)
+        public static void DrawCenteredInputFields(int width, int height, string name = "")
         {
             int left = (Console.WindowWidth - width) / 2;
             int top = (Console.WindowHeight - (2 * height + 1)) / 2;
 
-            Console.SetCursorPosition(left, top);
-            Console.WriteLine("Admin Login");
+            Console.SetCursorPosition(left, top + 1);
+            Console.WriteLine("Tai khoan:");
 
-            DrawInputField(left, top, width, height);
-            DrawInputField(left, top + height + 1, width, height);
+            DrawInputField(left, top + 2, width, height);
+
+            Console.SetCursorPosition(left, top + 6);
+            Console.WriteLine("Mat khau:");
+
+            DrawInputField(left, top + height + 5, width, height);
         }
     }
 }

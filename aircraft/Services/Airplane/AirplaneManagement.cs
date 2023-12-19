@@ -13,7 +13,15 @@ namespace aircraft.Services.Airplane
 
         public static void GetAirplaneList()
         {
-            List<Models.Airplane> airplaneList = _GetAirplaneList();
+
+            _GetAirplaneList();
+            Common.printStringCenterAfterNoBreak("An phim bat ki de tro ve!");
+            Console.ReadKey();
+        }
+
+        private static void _GetAirplaneList()
+        {
+            List<Models.Airplane> airplaneList = __GetAirplaneList();
 
             if (airplaneList != null && airplaneList.Count > 0)
             {
@@ -31,15 +39,12 @@ namespace aircraft.Services.Airplane
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Không có dữ liệu máy bay.");
+                Console.WriteLine("Khong co du lieu may bay.");
                 Console.ResetColor();
             }
-
-            Common.printStringCenterAfterNoBreak("An phim bat ki de tro ve!");
-            Console.ReadKey();
         }
 
-        private static List<Models.Airplane> _GetAirplaneList()
+        private static List<Models.Airplane> __GetAirplaneList()
         {
             List<Models.Airplane> airplaneList = new List<Models.Airplane>();
 
@@ -81,7 +86,7 @@ namespace aircraft.Services.Airplane
             do
             {
                 Console.Clear();
-                GetAirplaneList();
+                _GetAirplaneList();
                 Common.printStringCenterAfterNoBreak("Nhap ma may bay: ");
                 string code = Console.ReadLine();
                 Models.Airplane airplane = _GetAirplaneDetails(code);
@@ -122,7 +127,7 @@ namespace aircraft.Services.Airplane
 
         private static Models.Airplane _GetAirplaneDetails(string code)
         {
-            List<Models.Airplane> airplaneList = _GetAirplaneList();
+            List<Models.Airplane> airplaneList = __GetAirplaneList();
             Models.Airplane airplane = airplaneList.FirstOrDefault(ap => ap.PlaneCode == code);
             return airplane;
         }

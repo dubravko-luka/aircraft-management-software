@@ -14,7 +14,7 @@ namespace aircraft.Services.Auth
             const int width = 50;
             const int height = 2;
             Console.ForegroundColor = ConsoleColor.Red;
-            Common.PrintCenteredText(message, -10);
+            Common.PrintCenteredText(message, -20);
             Console.ResetColor();
             Common.PrintCenteredText("Login Admin", 8);
             UserInterface.DrawCenteredInputFields(width, height);
