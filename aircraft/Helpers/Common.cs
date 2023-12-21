@@ -99,14 +99,14 @@ namespace aircraft.Helpers
             Console.WriteLine(str);
         }
 
-        public static void PrintCentered(string title, string[] options, string message = "")
+        public static void PrintCentered(string title, string[] options, string message = "", int top = 0)
         {
             Console.Clear();
 
             int windowHeight = Console.WindowHeight;
             int windowWidth = Console.WindowWidth;
 
-            int titleTop = windowHeight / 2 - (options.Length + 3) / 2;
+            int titleTop = top > 0 ? top : windowHeight / 2 - (options.Length + 3) / 2;
 
             string line = "+------------------------------------------------+";
 
@@ -148,6 +148,36 @@ namespace aircraft.Helpers
         {
             str = str.PadRight(25, ' ');
             return $"|{padSides(str, 48)}|";
+        }
+
+        public static void DrawTable(string[] headers, string[,] rowData, int padSidesLength = 24)
+        {
+            int columns = headers.Length;
+            int rows = rowData.GetLength(0);
+            int rowLength = (columns * padSidesLength) + (columns + 1);
+
+            string horizontalLine = "+" + new string('-', rowLength - 2) + "+";
+            string headerRow = "|";
+
+            foreach (string header in headers)
+            {
+                headerRow += Common.padSides(header, padSidesLength) + "|";
+            }
+
+            Common.printStringCenterAfter(horizontalLine, 0);
+            Common.printStringCenterAfter(headerRow, 0);
+            Common.printStringCenterAfter(horizontalLine, 0);
+
+            for (int i = 0; i < rows; i++)
+            {
+                string dataRow = "|";
+                for (int j = 0; j < columns; j++)
+                {
+                    dataRow += Common.padSides(rowData[i, j], padSidesLength) + "|";
+                }
+                Common.printStringCenterAfter(dataRow, 0);
+                Common.printStringCenterAfter(horizontalLine, 0);
+            }
         }
     }
 }

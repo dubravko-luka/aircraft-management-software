@@ -9,7 +9,7 @@ namespace aircraft.Services.Airplane
 {
     public class AirplaneManagement
     {
-        private const string filePath = "Airplanes.txt";
+        private const string filePath = Databases.Airplanes.Airplane.Airplane.filePath;
 
         public static void GetAirplaneList()
         {
@@ -34,7 +34,7 @@ namespace aircraft.Services.Airplane
                     rowData[i, 1] = airplaneList[i].SeatCount.ToString();
                 }
 
-                DrawTable(headers, rowData);
+                Common.DrawTable(headers, rowData);
             }
             else
             {
@@ -130,36 +130,6 @@ namespace aircraft.Services.Airplane
             List<Models.Airplane> airplaneList = __GetAirplaneList();
             Models.Airplane airplane = airplaneList.FirstOrDefault(ap => ap.PlaneCode == code);
             return airplane;
-        }
-
-        static void DrawTable(string[] headers, string[,] rowData)
-        {
-            int columns = headers.Length;
-            int rows = rowData.GetLength(0);
-            int rowLength = (columns * 24) + (columns + 1);
-
-            string horizontalLine = "+" + new string('-', rowLength - 2) + "+";
-            string headerRow = "|";
-
-            foreach (string header in headers)
-            {
-                headerRow += Common.padSides(header, 24) + "|";
-            }
-
-            Common.printStringCenterAfter(horizontalLine, 0);
-            Common.printStringCenterAfter(headerRow, 0);
-            Common.printStringCenterAfter(horizontalLine, 0);
-
-            for (int i = 0; i < rows; i++)
-            {
-                string dataRow = "|";
-                for (int j = 0; j < columns; j++)
-                {
-                    dataRow += Common.padSides(rowData[i, j], 24) + "|";
-                }
-                Common.printStringCenterAfter(dataRow, 0);
-                Common.printStringCenterAfter(horizontalLine, 0);
-            }
         }
     }
 }

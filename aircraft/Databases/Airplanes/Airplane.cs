@@ -20,7 +20,7 @@ namespace aircraft.Databases.Airplanes.Airplane
                 Models.Airplane airplane = new Models.Airplane
                 {
                     PlaneCode = $"MB{i + 1}",
-                    SeatCount = random.Next(100, 300) // Số chỗ từ 100 đến 299
+                    SeatCount = random.Next(100, 151)
                 };
                 airplaneList.Add(airplane);
             }

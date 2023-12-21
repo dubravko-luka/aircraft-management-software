@@ -16,7 +16,7 @@ namespace aircraft.Services.Auth
             Console.ForegroundColor = ConsoleColor.Red;
             Common.PrintCenteredText(message, -20);
             Console.ResetColor();
-            Common.PrintCenteredText("Login Admin", 8);
+            Common.PrintCenteredText("Dang nhap he thong", 8);
             UserInterface.DrawCenteredInputFields(width, height);
 
             int left = (Console.WindowWidth - width) / 2;

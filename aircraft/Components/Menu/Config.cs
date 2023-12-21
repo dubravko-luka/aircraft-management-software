@@ -7,11 +7,13 @@ namespace aircraft.Components.Menu
     {
         public static List<string> MAIN_MENU_LIST = new List<string>();
         public static List<string> AIRPLANE_MENU_LIST = new List<string>();
+        public static List<string> FLIGHT_MENU_LIST = new List<string>();
 
         public Config()
         {
             _createMainMenu();
             _createAirplaneMenu();
+            _createFlightMenu();
         }
 
         private void _createMainMenu()
@@ -30,6 +32,15 @@ namespace aircraft.Components.Menu
             AIRPLANE_MENU_LIST.Add("1. Xem danh sach");
             AIRPLANE_MENU_LIST.Add("2. Chi tiet");
             AIRPLANE_MENU_LIST.Add("0. Tro ve");
+        }
+
+        private void _createFlightMenu()
+        {
+            FLIGHT_MENU_LIST.Add("1. Xem danh sach");
+            FLIGHT_MENU_LIST.Add("2. Chi tiet");
+            FLIGHT_MENU_LIST.Add("3. Huy chuyen bay");
+            FLIGHT_MENU_LIST.Add("4. Hoan tat chuyen bay");
+            FLIGHT_MENU_LIST.Add("0. Tro ve");
         }
     }
 }

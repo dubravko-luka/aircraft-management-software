@@ -44,6 +44,11 @@
     <Compile Include="Services\Airplane\AirplaneManagement.cs" />
     <Compile Include="Databases\Airplanes\Airplane.cs" />
     <Compile Include="Databases\Init.cs" />
+    <Compile Include="Models\Flight.cs" />
+    <Compile Include="Databases\Airplanes\Flight.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Databases\Customer\Customer.cs" />
+    <Compile Include="Services\Airplane\FlightManagement.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
@@ -57,6 +62,7 @@
     <Folder Include="Models\" />
     <Folder Include="Services\Airplane\" />
     <Folder Include="Databases\Airplanes\" />
+    <Folder Include="Databases\Customer\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

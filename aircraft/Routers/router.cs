@@ -28,7 +28,7 @@ namespace aircraft.Routers
                         //vehicleService.delete();
                         break;
                     case 3:
-                        //vehicleService.edit();
+                        DirectionFlightMenu();
                         break;
                     case 4:
                         DirectionAirplaneMenu();
@@ -43,6 +43,34 @@ namespace aircraft.Routers
                         break;
                 }
             }
+        }
+
+        public static void DirectionFlightMenu()
+        {
+            int choice = 0;
+
+            do
+            {
+                choice = Components.Menu.Menu.FlightMenu();
+                Console.Clear();
+                switch (choice)
+                {
+                    case 1:
+                        Services.Airplane.FlightManagement.GetFlightList(); ;
+                        break;
+                    case 2:
+                        Services.Airplane.FlightManagement.GetFlightDetails();
+                        break;
+                    case 3:
+                        //Services.Airplane.AirplaneManagement.GetAirplaneDetails();
+                        break;
+                    case 4:
+                        //Services.Airplane.AirplaneManagement.GetAirplaneDetails();
+                        break;
+                    default:
+                        break;
+                }
+            } while (choice != 0);
         }
 
         public static void DirectionAirplaneMenu()
@@ -64,11 +92,6 @@ namespace aircraft.Routers
                     default:
                         break;
                 }
-                //Console.ForegroundColor = ConsoleColor.Red;
-                //Common.printStringCenterAfterNoBreak("An phim bat ki de tiep tuc!");
-                //Console.ResetColor();
-                //Console.ReadKey();
-                //Console.Clear();
             } while (choice != 0);
         }
     }

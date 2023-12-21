@@ -11,6 +11,8 @@ namespace aircraft.Databases
         {
             checkAdminData();
             checkAirplaneData();
+            checkFlightData();
+            checkCustomerData();
             //GenerateData();
         }
 
@@ -52,10 +54,28 @@ namespace aircraft.Databases
             }
         }
 
+        private static void checkFlightData()
+        {
+            string filePath = Airplanes.Flight.filePath;
+            if (!File.Exists(filePath))
+            {
+                Airplanes.Flight.GenerateFlightFile();
+            }
+        }
+
+        private static void checkCustomerData()
+        {
+            string filePath = Customer.Customer.filePath;
+            if (!File.Exists(filePath))
+            {
+                Customer.Customer.GenerateCustomerFile();
+            }
+        }
+
         static void GenerateData()
         {
             int count = 1;
-            int maxCount = 3;
+            int maxCount = 1;
             int delay = 500;
 
             while (count <= maxCount)
@@ -72,9 +92,9 @@ namespace aircraft.Databases
                 } while (dotCount <= maxDotCount);
                 count++;
             }
-
-            Console.WriteLine();
-            Console.WriteLine("Data generated!");
+            Console.Clear();
+            Common.PrintCenteredTextNoBreak("Data generated!", 0);
+            Thread.Sleep(delay);
         }
     }
 }
