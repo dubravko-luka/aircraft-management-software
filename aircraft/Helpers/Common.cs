@@ -202,5 +202,67 @@ namespace aircraft.Helpers
                 Common.printStringCenterAfter(horizontalLine, 0);
             }
         }
+
+        public static bool DoYouWantContinute(string message = "Ban co muon tiep tuc (y/n): ")
+        {
+            bool inpubtValid = false;
+            bool continute = true;
+            do
+            {
+                Common.printStringCenterAfterNoBreak($"{message}", 2);
+                string choice = Console.ReadLine();
+                if (choice == "Y" || choice == "y")
+                {
+                    inpubtValid = true;
+                }
+                if (choice == "N" || choice == "n")
+                {
+                    inpubtValid = true;
+                    continute = false;
+                }
+            } while (!inpubtValid);
+
+            return continute;
+        }
+
+        public static string InputString()
+        {
+            string input = "";
+
+            while (true)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    return Constants.EscapeString;
+                }
+                else if (key.Key == ConsoleKey.Enter)
+                {
+                    return input;
+                }
+                else if (key.Key == ConsoleKey.Backspace && input.Length > 0)
+                {
+                    input = input.Remove(input.Length - 1);
+                    Console.Write("\b \b");
+                }
+                else if (!char.IsControl(key.KeyChar))
+                {
+                    input += key.KeyChar;
+                    Console.Write(key.KeyChar);
+                }
+            }
+        }
+
+        public static bool IsEsc(string str)
+        {
+            if (str == Constants.EscapeString)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
     }
 }

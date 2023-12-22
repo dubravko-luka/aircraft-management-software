@@ -1,0 +1,5 @@
+Ticket Code: TF007-803885893-1
+Flight Code: F007
+Customer ID: 803885893
+Customer Name: Bui Phuoc
+Seat Number: 1

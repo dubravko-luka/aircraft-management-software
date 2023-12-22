@@ -7,9 +7,10 @@ namespace aircraft.Services.Auth
 {
     public class AdminLogin
     {
-        public static bool Login(string message = "")
-        {
 
+        public static bool Login(string message = "", int loginFail = 1)
+        {
+            
             Console.Clear();
             const int width = 50;
             const int height = 2;
@@ -32,7 +33,25 @@ namespace aircraft.Services.Auth
             {
                 if (!Authenticate(username, password))
                 {
-                    Login("Tai khoan hoac mat khau khong chinh xac!");
+                    Console.WriteLine($"loginFail {loginFail}");
+                    if (loginFail == 3)
+                    {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        int s = 5;
+                        do
+                        {
+                            Common.PrintCenteredText("Ban da nhap sai qua 3 lan", 0);
+                            Common.printStringCenterAfterNoBreak($"He thong the dong sau 0{s} giay", 1);
+                            s--;
+                            Thread.Sleep(1000);
+                        } while (s >= 0);
+                        Console.ResetColor();
+                        Common.checkIsQuit(0);
+                    } else
+                    {
+                        Login($"Tai khoan hoac mat khau khong chinh xac! {loginFail}", loginFail + 1);
+                    }
                 }
             } else
             {

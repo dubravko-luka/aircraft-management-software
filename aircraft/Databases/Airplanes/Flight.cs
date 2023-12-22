@@ -21,7 +21,7 @@ namespace aircraft.Databases.Airplanes
 
             using (StreamWriter writer = new StreamWriter(filePath))
             {
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 15; i++)
                 {
                     string flightCode = "F" + (i + 1).ToString().PadLeft(3, '0');
 

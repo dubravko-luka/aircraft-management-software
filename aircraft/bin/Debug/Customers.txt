@@ -1,4 +1,3 @@
-2,192609106,Ngo Ha
 3,608839018,Dang Trinh
 4,956668523,Dang Phuoc
 5,359110394,Pham Trinh
@@ -12,5 +11,3 @@
 14,680127175,Nguyen Ha
 15,795761250,Do Trinh
 16,511964796,Dang Phuoc
-18,803885893,Bui Phuoc
-19,310034716,Pham Khanh

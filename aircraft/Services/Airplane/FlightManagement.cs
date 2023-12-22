@@ -4,6 +4,7 @@ using System.IO;
 using aircraft.Models;
 using aircraft.Helpers;
 using System.Linq;
+using System.Threading;
 
 namespace aircraft.Services.Airplane
 {
@@ -45,13 +46,49 @@ namespace aircraft.Services.Airplane
                     rowData[i, 5] = flights[i].TicketList.Length.ToString();
                     rowData[i, 6] = flights[i].EmptySeats.Length.ToString();
 
-                    coloredCells.Add(
-                        Tuple.Create(
-                            i,
-                            4,
-                            flights[i].Status == 0 ? ConsoleColor.Red : flights[i].Status == 1 ? ConsoleColor.Green : flights[i].Status == 2 ? ConsoleColor.Yellow : ConsoleColor.Blue
-                        )
-                    );
+                    if (flights[i].Status == 0)
+                    {
+                        coloredCells.Add(Tuple.Create(i, 0, ConsoleColor.Red));
+                        coloredCells.Add(Tuple.Create(i, 1, ConsoleColor.Red));
+                        coloredCells.Add(Tuple.Create(i, 2, ConsoleColor.Red));
+                        coloredCells.Add(Tuple.Create(i, 3, ConsoleColor.Red));
+                        coloredCells.Add(Tuple.Create(i, 4, ConsoleColor.Red));
+                        coloredCells.Add(Tuple.Create(i, 5, ConsoleColor.Red));
+                        coloredCells.Add(Tuple.Create(i, 6, ConsoleColor.Red));
+                    }
+
+                    if (flights[i].Status == 1)
+                    {
+                        coloredCells.Add(Tuple.Create(i, 0, ConsoleColor.Green));
+                        coloredCells.Add(Tuple.Create(i, 1, ConsoleColor.Green));
+                        coloredCells.Add(Tuple.Create(i, 2, ConsoleColor.Green));
+                        coloredCells.Add(Tuple.Create(i, 3, ConsoleColor.Green));
+                        coloredCells.Add(Tuple.Create(i, 4, ConsoleColor.Green));
+                        coloredCells.Add(Tuple.Create(i, 5, ConsoleColor.Green));
+                        coloredCells.Add(Tuple.Create(i, 6, ConsoleColor.Green));
+                    }
+
+                    if (flights[i].Status == 2)
+                    {
+                        coloredCells.Add(Tuple.Create(i, 0, ConsoleColor.Yellow));
+                        coloredCells.Add(Tuple.Create(i, 1, ConsoleColor.Yellow));
+                        coloredCells.Add(Tuple.Create(i, 2, ConsoleColor.Yellow));
+                        coloredCells.Add(Tuple.Create(i, 3, ConsoleColor.Yellow));
+                        coloredCells.Add(Tuple.Create(i, 4, ConsoleColor.Yellow));
+                        coloredCells.Add(Tuple.Create(i, 5, ConsoleColor.Yellow));
+                        coloredCells.Add(Tuple.Create(i, 6, ConsoleColor.Yellow));
+                    }
+
+                    if (flights[i].Status == 3)
+                    {
+                        coloredCells.Add(Tuple.Create(i, 0, ConsoleColor.Blue));
+                        coloredCells.Add(Tuple.Create(i, 1, ConsoleColor.Blue));
+                        coloredCells.Add(Tuple.Create(i, 2, ConsoleColor.Blue));
+                        coloredCells.Add(Tuple.Create(i, 3, ConsoleColor.Blue));
+                        coloredCells.Add(Tuple.Create(i, 4, ConsoleColor.Blue));
+                        coloredCells.Add(Tuple.Create(i, 5, ConsoleColor.Blue));
+                        coloredCells.Add(Tuple.Create(i, 6, ConsoleColor.Blue));
+                    }
                 }
 
                 Common.DrawTable(headers, rowData, 24, coloredCells.ToArray());
@@ -232,6 +269,199 @@ namespace aircraft.Services.Airplane
             Console.WriteLine(" ");
 
             Common.DrawTable(headers, rowData, 7, coloredCells.ToArray());
+        }
+
+        public static void FlightCancel()
+        {
+            bool continute = true;
+
+            do
+            {
+                Console.Clear();
+                Airplane.FlightManagement._GetFlightList();
+                Common.printStringCenterAfterNoBreak("Moi nhap ma chuyen bay: ");
+
+                string flightCode = Common.InputString();
+                if (flightCode == Constants.EscapeString)
+                {
+                    break;
+                }
+
+                Models.Flight flight = Airplane.FlightManagement._GetFlightDetails(flightCode);
+
+                bool flightCodeValid = true;
+
+                if (flight == null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Common.printStringCenterAfter($"Khong tim thay du lieu!", 0);
+                    Console.ResetColor();
+                    flightCodeValid = false;
+                }
+
+                if (flight.Status == Constants.STATUS_FLIGHT_CANCELED)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Common.printStringCenterAfter($"Chuyen bay da huy!", 0);
+                    Console.ResetColor();
+                    flightCodeValid = false;
+                }
+
+                if (flight.Status == Constants.STATUS_FLIGHT_COMPLETED)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Common.printStringCenterAfter($"Chuyen bay da hoan thanh!", 0);
+                    Console.ResetColor();
+                    flightCodeValid = false;
+                }
+
+                if (flightCodeValid)
+                {
+                    if (Common.DoYouWantContinute("Ban co chac chan muon cap nhat (y/n): "))
+                    {
+                        string filePath = Databases.Airplanes.Flight.filePath;
+                        string[] lines = File.ReadAllLines(filePath);
+
+                        for (int i = 0; i < lines.Length; i++)
+                        {
+                            string[] data = lines[i].Split(',');
+
+                            if (data[0] == flight.FlightCode)
+                            {
+                                data[4] = Constants.STATUS_FLIGHT_CANCELED.ToString();
+
+                                lines[i] = string.Join(",", data);
+                                break;
+                            }
+                        }
+
+                        File.WriteAllLines(filePath, lines);
+
+                        Console.Clear();
+                        Airplane.FlightManagement._GetFlightList();
+                        Common.printStringCenterAfter("Cap nhat thanh cong!");
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Common.printStringCenterAfter("Da tu choi cap nhat! Xin cam on!");
+                    }
+                }
+
+                bool inpubtValid = false;
+                do
+                {
+                    Common.printStringCenterAfterNoBreak($"Tiep tuc (y/n): ", 2);
+                    string choice = Console.ReadLine();
+                    if (choice == "Y" || choice == "y")
+                    {
+                        inpubtValid = true;
+                    }
+                    if (choice == "N" || choice == "n")
+                    {
+                        inpubtValid = true;
+                        continute = false;
+                    }
+                } while (!inpubtValid);
+
+            } while (continute);
+        }
+
+        public static void FlightFinal()
+        {
+            bool continute = true;
+
+            do
+            {
+                Console.Clear();
+                Airplane.FlightManagement._GetFlightList();
+                Common.printStringCenterAfterNoBreak("Moi nhap ma chuyen bay: ");
+
+                string flightCode = Common.InputString();
+
+                if (flightCode == Constants.EscapeString)
+                {
+                    break;
+                }
+
+                Models.Flight flight = Airplane.FlightManagement._GetFlightDetails(flightCode);
+
+                bool flightCodeValid = true;
+
+                if (flight == null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Common.printStringCenterAfter($"Khong tim thay du lieu!", 0);
+                    Console.ResetColor();
+                    flightCodeValid = false;
+                }
+
+                if (flight.Status == Constants.STATUS_FLIGHT_CANCELED)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Common.printStringCenterAfter($"Chuyen bay da bi huy!", 0);
+                    Console.ResetColor();
+                    flightCodeValid = false;
+                }
+
+                if (flight.Status == Constants.STATUS_FLIGHT_COMPLETED)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Common.printStringCenterAfter($"Chuyen bay da hoan thanh!", 0);
+                    Console.ResetColor();
+                    flightCodeValid = false;
+                }
+
+                if (flightCodeValid)
+                {
+                    if (Common.DoYouWantContinute("Ban co chac chan muon cap nhat (y/n): "))
+                    {
+                        string filePath = Databases.Airplanes.Flight.filePath;
+                        string[] lines = File.ReadAllLines(filePath);
+
+                        for (int i = 0; i < lines.Length; i++)
+                        {
+                            string[] data = lines[i].Split(',');
+
+                            if (data[0] == flight.FlightCode)
+                            {
+                                data[4] = Constants.STATUS_FLIGHT_COMPLETED.ToString();
+
+                                lines[i] = string.Join(",", data);
+                                break;
+                            }
+                        }
+
+                        File.WriteAllLines(filePath, lines);
+
+                        Console.Clear();
+                        Airplane.FlightManagement._GetFlightList();
+                        Common.printStringCenterAfter("Cap nhat thanh cong!");
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Common.printStringCenterAfter("Da tu choi cap nhat! Xin cam on!");
+                    }
+                }
+
+                bool inpubtValid = false;
+                do
+                {
+                    Common.printStringCenterAfterNoBreak($"Tiep tuc (y/n): ", 2);
+                    string choice = Console.ReadLine();
+                    if (choice == "Y" || choice == "y")
+                    {
+                        inpubtValid = true;
+                    }
+                    if (choice == "N" || choice == "n")
+                    {
+                        inpubtValid = true;
+                        continute = false;
+                    }
+                } while (!inpubtValid);
+
+            } while (continute);
         }
     }
 }

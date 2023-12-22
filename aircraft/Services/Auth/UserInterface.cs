@@ -1,4 +1,6 @@
 ﻿using System;
+using aircraft.Helpers;
+
 namespace aircraft.Services.Auth
 {
     public class UserInterface
@@ -29,7 +31,13 @@ namespace aircraft.Services.Auth
         public static string GetUsername(int left, int top)
         {
             Console.SetCursorPosition(left + 3, top + 3);
-            return Console.ReadLine();
+            string username = Common.InputString();
+
+            if (username == Constants.EscapeString)
+            {
+                Common.checkIsQuit(0);
+            }
+            return username;
         }
 
         public static string GetMaskedPassword(int left, int top)
@@ -51,6 +59,10 @@ namespace aircraft.Services.Auth
                 {
                     password = password.Substring(0, (password.Length - 1));
                     Console.Write("\b \b");
+                } else if (keyInfo.Key == ConsoleKey.Escape)
+                {
+                    Common.checkIsQuit(0);
+                    break;
                 }
             } while (keyInfo.Key != ConsoleKey.Enter);
 

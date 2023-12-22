@@ -1,0 +1,5 @@
+Ticket Code: TF001-310034716-1
+Flight Code: F001
+Customer ID: 310034716
+Customer Name: Pham Khanh
+Seat Number: 1

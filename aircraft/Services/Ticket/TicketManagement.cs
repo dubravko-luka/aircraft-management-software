@@ -18,22 +18,57 @@ namespace aircraft.Services.Ticket
             // Flight
             Airplane.FlightManagement._GetFlightList();
             Common.printStringCenterAfterNoBreak("Moi nhap ma chuyen bay: ");
+            flightCode = Common.InputString();
 
-            flightCode = Console.ReadLine();
+            if (Common.IsEsc(flightCode))
+            {
+                return;
+            }
+
             Models.Flight flight = Airplane.FlightManagement._GetFlightDetails(flightCode);
 
-            while (flight == null)
+            while (flight == null || flight.Status != Constants.STATUS_FLIGHT_AVAILABLE)
             {
                 if (flight == null)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Common.printStringCenterAfter($"Khong tim thay du lieu!", 0);
+                    Common.printStringCenterAfter($"Khong tim thay du lieu!", 1);
                     Console.ResetColor();
                 }
 
-                Common.printStringCenterAfterNoBreak("Moi nhap ma chuyen bay: ", 0);
-                flightCode = Console.ReadLine();
+                if (flight.Status == Constants.STATUS_FLIGHT_SOLD_OUT)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Common.printStringCenterAfter($"Ve da duoc ban het!", 1);
+                    Console.ResetColor();
+                }
+
+                if (flight.Status == Constants.STATUS_FLIGHT_CANCELED)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Common.printStringCenterAfter($"Chuyen bay da bi huy!", 1);
+                    Console.ResetColor();
+                }
+
+                if (flight.Status == Constants.STATUS_FLIGHT_COMPLETED)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Common.printStringCenterAfter($"Chuyen bay da hoan thanh!", 1);
+                    Console.ResetColor();
+                }
+
+                Common.printStringCenterAfterNoBreak("Moi nhap ma chuyen bay: ", 1);
+                flightCode = Common.InputString();
+                if (Common.IsEsc(flightCode))
+                {
+                    break;
+                }
                 flight = Airplane.FlightManagement._GetFlightDetails(flightCode);
+            }
+
+            if (Common.IsEsc(flightCode))
+            {
+                return;
             }
 
             // Seat
@@ -47,7 +82,11 @@ namespace aircraft.Services.Ticket
             do
             {
                 Common.printStringCenterAfterNoBreak("Moi nhap so ghe trong: ", 0);
-                seatNum = Console.ReadLine();
+                seatNum = Common.InputString();
+                if (Common.IsEsc(seatNum))
+                {
+                    break;
+                }
 
                 if (Common.IsNumeric(seatNum))
                 {
@@ -79,12 +118,21 @@ namespace aircraft.Services.Ticket
 
             } while (!validInput);
 
+            if (Common.IsEsc(seatNum))
+            {
+                return;
+            }
+
             // Customer
             Console.Clear();
             Customer.CustomerManagement._GetCustomerList();
 
             Common.printStringCenterAfterNoBreak("Moi nhap CMND khach hang: ");
             customerId = Console.ReadLine();
+            if (Common.IsEsc(customerId))
+            {
+                return;
+            }
             Models.Customer customer = Customer.CustomerManagement._GetCustomerDetails(customerId);
 
             while (customer == null)
@@ -97,8 +145,17 @@ namespace aircraft.Services.Ticket
                 }
 
                 Common.printStringCenterAfterNoBreak("Moi nhap CMND khach hang: ", 0);
-                customerId = Console.ReadLine();
+                customerId = Common.InputString();
+                if (Common.IsEsc(customerId))
+                {
+                    break;
+                }
                 customer = Customer.CustomerManagement._GetCustomerDetails(customerId);
+            }
+
+            if (Common.IsEsc(customerId))
+            {
+                return;
             }
 
             string ticketCode = $"T{flightCode}-{customerId}-{seatNum}";
@@ -125,7 +182,7 @@ namespace aircraft.Services.Ticket
 
             Console.Clear();
             Common.PrintCenteredText("Dat ve thanh cong! Xin cam on!");
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
         }
 
         private static void RemoveCustomerInfo(string customerID)
@@ -186,15 +243,27 @@ namespace aircraft.Services.Ticket
             {
                 Console.Clear();
                 Common.PrintCenteredTextNoBreak("Moi nhap CMND: ", 1);
-                string customerId = Console.ReadLine();
+                string customerId = Common.InputString();
+                if (Common.IsEsc(customerId))
+                {
+                    break;
+                }
                 Common.printStringCenterAfterNoBreak("Moi nhap ma chuyen bay: ", 1);
-                string flightCode = Console.ReadLine();
+                string flightCode = Common.InputString();
+                if (Common.IsEsc(flightCode))
+                {
+                    break;
+                }
                 string seatNum = "";
 
                 do
                 {
                     Common.printStringCenterAfterNoBreak("Moi nhap so ghe: ", 1);
-                    seatNum = Console.ReadLine();
+                    seatNum = Common.InputString();
+                    if (Common.IsEsc(seatNum))
+                    {
+                        break;
+                    }
 
                     if (!Common.IsNumeric(seatNum))
                     {
@@ -204,6 +273,11 @@ namespace aircraft.Services.Ticket
                     }
 
                 } while (!Common.IsNumeric(seatNum));
+
+                if (Common.IsEsc(seatNum))
+                {
+                    break;
+                }
 
                 string filePath = $"T{flightCode}-{customerId}-{seatNum}.txt";
 
@@ -215,18 +289,28 @@ namespace aircraft.Services.Ticket
                     Console.ResetColor();
                 } else
                 {
-                    _DetailTicket(filePath);
-                    if (DoYouWantContinute("Ban co chac chan muon xoa (y/n): "))
+                    Models.Flight flight = Airplane.FlightManagement._GetFlightDetails(flightCode);
+                    if (flight.Status == Constants.STATUS_FLIGHT_CANCELED || flight.Status == Constants.STATUS_FLIGHT_SOLD_OUT)
                     {
-                        _CancelTicket(filePath, flightCode, int.Parse(seatNum));
                         Console.Clear();
-                        Common.PrintCenteredText("Da xoa ve thanh cong! Xin cam on!");
+                        Common.PrintCenteredText("Ve khong the huy! Do chuyen bay da huy hoac da hoan thanh!");
                         Thread.Sleep(1000);
                     } else
                     {
-                        Console.Clear();
-                        Common.PrintCenteredText("Da tu choi xoa! Xin cam on!");
-                        Thread.Sleep(1000);
+                        _DetailTicket(filePath);
+                        if (DoYouWantContinute("Ban co chac chan muon xoa (y/n): "))
+                        {
+                            _CancelTicket(filePath, flightCode, int.Parse(seatNum));
+                            Console.Clear();
+                            Common.PrintCenteredText("Da xoa ve thanh cong! Xin cam on!");
+                            Thread.Sleep(1000);
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Common.PrintCenteredText("Da tu choi xoa! Xin cam on!");
+                            Thread.Sleep(1000);
+                        }
                     }
                 }
 
@@ -295,15 +379,27 @@ namespace aircraft.Services.Ticket
             {
                 Console.Clear();
                 Common.PrintCenteredTextNoBreak("Moi nhap CMND: ", 1);
-                string customerId = Console.ReadLine();
+                string customerId = Common.InputString();
+                if (Common.IsEsc(customerId))
+                {
+                    break;
+                }
                 Common.printStringCenterAfterNoBreak("Moi nhap ma chuyen bay: ", 1);
-                string flightCode = Console.ReadLine();
+                string flightCode = Common.InputString();
+                if (Common.IsEsc(flightCode))
+                {
+                    break;
+                }
                 string seatNum = "";
 
                 do
                 {
                     Common.printStringCenterAfterNoBreak("Moi nhap so ghe: ", 1);
-                    seatNum = Console.ReadLine();
+                    seatNum = Common.InputString();
+                    if (Common.IsEsc(seatNum))
+                    {
+                        break;
+                    }
 
                     if (!Common.IsNumeric(seatNum))
                     {
@@ -313,6 +409,11 @@ namespace aircraft.Services.Ticket
                     }
 
                 } while (!Common.IsNumeric(seatNum));
+
+                if (Common.IsEsc(seatNum))
+                {
+                    break;
+                }
 
                 string filePath = $"T{flightCode}-{customerId}-{seatNum}.txt";
 
@@ -351,48 +452,51 @@ namespace aircraft.Services.Ticket
 
         public static void TicketList()
         {
-            Airplane.FlightManagement._GetFlightList();
-            Common.printStringCenterAfterNoBreak("Moi nhap ma chuyen bay: ");
-
-            string flightCode = Console.ReadLine();
-            Models.Flight flight = Airplane.FlightManagement._GetFlightDetails(flightCode);
-
-            if (flight == null)
+            do
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Common.printStringCenterAfter($"Khong tim thay du lieu!", 0);
-                Console.ResetColor();
-            } else
-            {
-                string directoryPath = Directory.GetCurrentDirectory();
-
-                int[] bookedSeats = Array.ConvertAll(flight.TicketList, int.Parse);
                 Console.Clear();
-                Common.printStringCenterAfter($"Danh sach ve chuyen bay {flightCode}", 2);
-                Common.printStringCenterAfter("", 2);
-                string[] headers = { "Ma ve", "So CMND", "Ho va Ten", "So ghe" };
-                string[,] rowData = new string[bookedSeats.Length, 4];
-                var rowNum = 0;
+                Airplane.FlightManagement._GetFlightList();
+                Common.printStringCenterAfterNoBreak("Moi nhap ma chuyen bay: ");
 
-                foreach (int seatNum in bookedSeats)
+                string flightCode = Console.ReadLine();
+                Models.Flight flight = Airplane.FlightManagement._GetFlightDetails(flightCode);
+
+                if (flight == null)
                 {
-                    string[] files = Directory.GetFiles(directoryPath, $"T{flightCode}-*-{seatNum}.txt");
-
-                    foreach (string filePath in files)
-                    {
-                        string[] lines = File.ReadAllLines(filePath);
-                        rowData[rowNum, 0] = lines[0].Split(':')[1].Trim();
-                        rowData[rowNum, 1] = lines[2].Split(':')[1].Trim();
-                        rowData[rowNum, 2] = lines[3].Split(':')[1].Trim();
-                        rowData[rowNum, 3] = lines[4].Split(':')[1].Trim();
-                    }
-                    rowNum++;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Common.printStringCenterAfter($"Khong tim thay du lieu!", 0);
+                    Console.ResetColor();
                 }
+                else
+                {
+                    string directoryPath = Directory.GetCurrentDirectory();
 
-                Common.DrawTable(headers, rowData);
-            }
+                    int[] bookedSeats = Array.ConvertAll(flight.TicketList, int.Parse);
+                    Console.Clear();
+                    Common.printStringCenterAfter($"Danh sach ve chuyen bay {flightCode}", 2);
+                    Common.printStringCenterAfter("", 2);
+                    string[] headers = { "Ma ve", "So CMND", "Ho va Ten", "So ghe" };
+                    string[,] rowData = new string[bookedSeats.Length, 4];
+                    var rowNum = 0;
 
-            Console.ReadKey();
+                    foreach (int seatNum in bookedSeats)
+                    {
+                        string[] files = Directory.GetFiles(directoryPath, $"T{flightCode}-*-{seatNum}.txt");
+
+                        foreach (string filePath in files)
+                        {
+                            string[] lines = File.ReadAllLines(filePath);
+                            rowData[rowNum, 0] = lines[0].Split(':')[1].Trim();
+                            rowData[rowNum, 1] = lines[2].Split(':')[1].Trim();
+                            rowData[rowNum, 2] = lines[3].Split(':')[1].Trim();
+                            rowData[rowNum, 3] = lines[4].Split(':')[1].Trim();
+                        }
+                        rowNum++;
+                    }
+
+                    Common.DrawTable(headers, rowData);
+                }
+            } while (DoYouWantContinute());
         }
     }
 }

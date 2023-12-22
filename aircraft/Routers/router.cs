@@ -84,10 +84,10 @@ namespace aircraft.Routers
                         Services.Airplane.FlightManagement.GetFlightDetails();
                         break;
                     case 3:
-                        //Services.Airplane.AirplaneManagement.GetAirplaneDetails();
+                        Services.Airplane.FlightManagement.FlightCancel();
                         break;
                     case 4:
-                        //Services.Airplane.AirplaneManagement.GetAirplaneDetails();
+                        Services.Airplane.FlightManagement.FlightFinal();
                         break;
                     default:
                         break;
