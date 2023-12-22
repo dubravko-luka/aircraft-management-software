@@ -9,7 +9,7 @@ namespace aircraft.Services.Airplane
 {
     public class FlightManagement
     {
-        private const string filePath = Databases.Airplanes.Flight.filePath;
+        public const string filePath = Databases.Airplanes.Flight.filePath;
 
         public static void GetFlightList()
         {
@@ -19,7 +19,7 @@ namespace aircraft.Services.Airplane
             Console.ReadKey();
         }
 
-        private static void _GetFlightList(string[] headers = null)
+        public static void _GetFlightList(string[] headers = null)
         {
             List<Flight> flights = __GetFlightList();
 
@@ -33,18 +33,28 @@ namespace aircraft.Services.Airplane
 
                 string[,] rowData = new string[flights.Count, 7];
 
+                var coloredCells = new List<Tuple<int, int, ConsoleColor>>();
+
                 for (int i = 0; i < flights.Count; i++)
                 {
                     rowData[i, 0] = flights[i].FlightCode;
                     rowData[i, 1] = flights[i].AircraftCode;
                     rowData[i, 2] = flights[i].DepartureDate;
                     rowData[i, 3] = flights[i].DestinationAirport;
-                    rowData[i, 4] = flights[i].Status.ToString();
+                    rowData[i, 4] = Constants.STATUS_FLIGHT[flights[i].Status].ToString();
                     rowData[i, 5] = flights[i].TicketList.Length.ToString();
                     rowData[i, 6] = flights[i].EmptySeats.Length.ToString();
+
+                    coloredCells.Add(
+                        Tuple.Create(
+                            i,
+                            4,
+                            flights[i].Status == 0 ? ConsoleColor.Red : flights[i].Status == 1 ? ConsoleColor.Green : flights[i].Status == 2 ? ConsoleColor.Yellow : ConsoleColor.Blue
+                        )
+                    );
                 }
 
-                Common.DrawTable(headers, rowData);
+                Common.DrawTable(headers, rowData, 24, coloredCells.ToArray());
             }
             else
             {
@@ -119,43 +129,12 @@ namespace aircraft.Services.Airplane
                         $"So hieu may bay: {flight.AircraftCode}",
                         $"Ngay khoi hanh: {flight.DepartureDate}",
                         $"San bay den: {flight.DestinationAirport}",
-                        $"Trang thai chuyen bay: {flight.Status}",
+                        $"Trang thai chuyen bay: {Constants.STATUS_FLIGHT[flight.Status]}",
                         $"So luong ghe: {seatCount}",
                     };
-                    Common.PrintCentered($"Thong tin chi tiet may bay ma so {code}", data, "", 3);
-                    //DisplayTicketList(flight.TicketList);
-                    DrawTable(seatCount);
-
-                    //if (!string.IsNullOrEmpty(flight.EmptySeats))
-                    //{
-                    //List<string[]> ticketChunks = SplitList(flight.TicketList);
-                    //for (int index = 0; index < ticketChunks.Count; index++)
-                    //{
-                    //    var ticketChunk = ticketChunks[index];
-
-                    //    string[,] rowData = new string[ticketChunk.Length, 10];
-
-                    //    rowData[index, 0] = "1";
-                    //    rowData[index, 1] = "1";
-                    //    rowData[index, 2] = "1";
-                    //    rowData[index, 3] = "1";
-                    //    rowData[index, 4] = "1";
-                    //    rowData[index, 5] = "1";
-                    //    rowData[index, 6] = "1";
-                    //    rowData[index, 7] = "1";
-                    //    rowData[index, 8] = "1";
-                    //    rowData[index, 9] = "1";
-
-                    //    Common.DrawTableNoHeader(rowData, 9);
-                    //}
-                    //}
-
-                    //if (!string.IsNullOrEmpty(flight.EmptySeats))
-                    //{
-                    //    string[,] emptySeatChunks = SplitList(flight.EmptySeats);
-                    //    Common.DrawTableNoHeader(emptySeatChunks);
-                    //}
-
+                    Common.PrintCentered($"Thong tin chi tiet chuyen bay so hieu: {code}", data, "", 3);
+                    int[] bookedSeats = Array.ConvertAll(flight.TicketList, int.Parse);
+                    DrawTableSeat(seatCount, bookedSeats);
                 }
                 else
                 {
@@ -182,31 +161,7 @@ namespace aircraft.Services.Airplane
             } while (continute);
         }
 
-        public static void DisplayTicketList(string[] ticketList)
-        {
-            const int columnCount = 10;
-            int ticketCount = ticketList.Length;
-            int rowCount = (int)Math.Ceiling((double)ticketCount / columnCount);
-
-            for (int i = 0; i < rowCount; i++)
-            {
-                for (int j = 0; j < columnCount; j++)
-                {
-                    int index = i * columnCount + j;
-                    if (index < ticketCount)
-                    {
-                        Console.Write($"|{ticketList[index],-6}");
-                    }
-                    else
-                    {
-                        Console.Write($"|{' ',-6}");
-                    }
-                }
-                Console.WriteLine("|");
-            }
-        }
-
-        private static Models.Flight _GetFlightDetails(string code)
+        public static Models.Flight _GetFlightDetails(string code)
         {
             List<Models.Flight> flightList = __GetFlightList();
             Models.Flight flight = flightList.FirstOrDefault(ap => ap.FlightCode == code);
@@ -232,13 +187,15 @@ namespace aircraft.Services.Airplane
             return 0;
         }
 
-        public static void DrawTable(int seatCount = 100)
+        public static void DrawTableSeat(int seatCount = 100, int[] bookedSeats = null)
         {
             string[] headers = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O" };
 
             int rows = (int)Math.Ceiling((double)seatCount / 15);
 
             string[,] rowData = new string[rows, headers.Length];
+
+            var coloredCells = new List<Tuple<int, int, ConsoleColor>>();
 
             for (int i = 0; i < rows; i++)
             {
@@ -248,6 +205,10 @@ namespace aircraft.Services.Airplane
                     if (seatNumber <= seatCount)
                     {
                         rowData[i, j] = seatNumber.ToString();
+                        if (Array.IndexOf(bookedSeats, seatNumber) != -1)
+                        {
+                            coloredCells.Add(Tuple.Create(i, j, ConsoleColor.Red));
+                        }
                     }
                     else
                     {
@@ -256,13 +217,21 @@ namespace aircraft.Services.Airplane
                 }
             }
 
-
             int windowWidth = Console.WindowWidth;
             string title = "Danh sach ghe ngoi";
             Console.SetCursorPosition((windowWidth - title.Length) / 2, Console.CursorTop + 1);
             Console.WriteLine(title);
 
-            Common.DrawTable(headers, rowData, 7);
+            string selled = "Ghe khong co san   ";
+            string available = "Ghe co san";
+            Console.SetCursorPosition((windowWidth - (selled.Length + available.Length)) / 2, Console.CursorTop + 1);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(selled);
+            Console.ResetColor();
+            Console.WriteLine(available);
+            Console.WriteLine(" ");
+
+            Common.DrawTable(headers, rowData, 7, coloredCells.ToArray());
         }
     }
 }

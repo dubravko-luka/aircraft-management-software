@@ -20,7 +20,7 @@ namespace aircraft.Databases.Airplanes.Airplane
                 Models.Airplane airplane = new Models.Airplane
                 {
                     PlaneCode = $"MB{i + 1}",
-                    SeatCount = random.Next(100, 151)
+                    SeatCount = random.Next(2, 4) // 2 - 3
                 };
                 airplaneList.Add(airplane);
             }

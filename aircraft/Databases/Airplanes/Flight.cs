@@ -17,7 +17,7 @@ namespace aircraft.Databases.Airplanes
 
             Random random = new Random();
 
-            string[] airplaneData = File.ReadAllLines("Airplanes.txt");
+            string[] airplaneData = File.ReadAllLines(Airplane.Airplane.filePath);
 
             using (StreamWriter writer = new StreamWriter(filePath))
             {
@@ -35,7 +35,8 @@ namespace aircraft.Databases.Airplanes
 
                     string destinationAirport = airportList[random.Next(airportList.Count)];
 
-                    int status = random.Next(4); // Status flight: 0 - 3
+                    //int status = random.Next(4); // Status flight: 0 - 3
+                    int status = 1;
                     //{ "Canceled", "Available", "Sold out", "Completed" };
 
                     List<string> ticketList = new List<string>();
@@ -44,7 +45,7 @@ namespace aircraft.Databases.Airplanes
                     {
                         if (status == 2)
                         {
-                            ticketList.Add($"Ticket{j}");
+                            ticketList.Add($"{j}");
                         }
                         else
                         {

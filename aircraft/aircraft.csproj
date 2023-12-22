@@ -49,6 +49,9 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Databases\Customer\Customer.cs" />
     <Compile Include="Services\Airplane\FlightManagement.cs" />
+    <Compile Include="Services\Customer\CustomerManagement.cs" />
+    <Compile Include="Models\Ticket.cs" />
+    <Compile Include="Services\Ticket\TicketManagement.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
@@ -63,6 +66,8 @@
     <Folder Include="Services\Airplane\" />
     <Folder Include="Databases\Airplanes\" />
     <Folder Include="Databases\Customer\" />
+    <Folder Include="Services\Customer\" />
+    <Folder Include="Services\Ticket\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

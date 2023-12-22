@@ -1,37 +1,37 @@
 ﻿using System;
-using aircraft.Models;
-using aircraft.Helpers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using aircraft.Helpers;
 
-namespace aircraft.Services.Airplane
+namespace aircraft.Services.Customer
 {
-    public class AirplaneManagement
+    public class CustomerManagement
     {
-        private const string filePath = Databases.Airplanes.Airplane.Airplane.filePath;
+        public const string filePath = Databases.Customer.Customer.filePath;
 
-        public static void GetAirplaneList()
+        public static void GetCustomerList()
         {
 
-            _GetAirplaneList();
+            _GetCustomerList();
             Common.printStringCenterAfterNoBreak("An phim bat ki de tro ve!");
             Console.ReadKey();
         }
 
-        public static void _GetAirplaneList()
+        public static void _GetCustomerList()
         {
-            List<Models.Airplane> airplaneList = __GetAirplaneList();
+            List<Models.Customer> CustomerList = __GetCustomerList();
 
-            if (airplaneList != null && airplaneList.Count > 0)
+            if (CustomerList != null && CustomerList.Count > 0)
             {
-                string[] headers = { "So hieu may bay", "So cho ngoi" };
-                string[,] rowData = new string[airplaneList.Count, 2];
+                string[] headers = { "So thu tu", "So CMND", "Ho va Ten" };
+                string[,] rowData = new string[CustomerList.Count, 3];
 
-                for (int i = 0; i < airplaneList.Count; i++)
+                for (int i = 0; i < CustomerList.Count; i++)
                 {
-                    rowData[i, 0] = airplaneList[i].PlaneCode;
-                    rowData[i, 1] = airplaneList[i].SeatCount.ToString();
+                    rowData[i, 0] = CustomerList[i].SequenceNumber.ToString();
+                    rowData[i, 1] = CustomerList[i].CMND.ToString();
+                    rowData[i, 2] = CustomerList[i].FullName.ToString();
                 }
 
                 Common.DrawTable(headers, rowData);
@@ -39,14 +39,14 @@ namespace aircraft.Services.Airplane
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Khong co du lieu may bay.");
+                Console.WriteLine("Khong co du lieu khach hang.");
                 Console.ResetColor();
             }
         }
 
-        private static List<Models.Airplane> __GetAirplaneList()
+        private static List<Models.Customer> __GetCustomerList()
         {
-            List<Models.Airplane> airplaneList = new List<Models.Airplane>();
+            List<Models.Customer> CustomerList = new List<Models.Customer>();
 
             try
             {
@@ -54,30 +54,31 @@ namespace aircraft.Services.Airplane
                 foreach (string line in lines)
                 {
                     string[] items = line.Split(',');
-                    if (items.Length == 2)
+                    if (items.Length == 3)
                     {
-                        Models.Airplane airplane = new Models.Airplane
+                        Models.Customer Customer = new Models.Customer
                         {
-                            PlaneCode = items[0],
-                            SeatCount = int.Parse(items[1])
+                            SequenceNumber = int.Parse(items[0]),
+                            CMND = items[1],
+                            FullName = items[2]
                         };
-                        airplaneList.Add(airplane);
+                        CustomerList.Add(Customer);
                     }
                 }
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("Airplanes.txt not found");
+                Console.WriteLine("Customers.txt not found");
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
 
-            return airplaneList;
+            return CustomerList;
         }
 
-        public static void GetAirplaneDetails()
+        public static void GetCustomerDetails()
         {
             bool continute = true;
             int windowHeight = Console.WindowHeight;
@@ -86,19 +87,19 @@ namespace aircraft.Services.Airplane
             do
             {
                 Console.Clear();
-                _GetAirplaneList();
-                Common.printStringCenterAfterNoBreak("Nhap ma may bay: ");
+                _GetCustomerList();
+                Common.printStringCenterAfterNoBreak("Nhap chung minh nhan dan: ");
                 string code = Console.ReadLine();
-                Models.Airplane airplane = _GetAirplaneDetails(code);
+                Models.Customer customer = _GetCustomerDetails(code);
 
                 Console.Clear();
                 Console.SetCursorPosition(windowWidth / 2, windowHeight / 2);
                 Console.WriteLine(" ");
 
-                if (airplane != null)
+                if (customer != null)
                 {
-                    string[] data = { $"So hieu may bay: {airplane.PlaneCode}", $"So cho ngoi: {airplane.SeatCount}" };
-                    Common.PrintCentered($"Thong tin chi tiet may bay ma so: {code}", data);
+                    string[] data = { $"So thu tu: {customer.SequenceNumber}", $"So CMND: {customer.CMND}", $"Ho va Ten: {customer.FullName}" };
+                    Common.PrintCentered($"Khach hang co CMND: {code}", data);
                 }
                 else
                 {
@@ -125,11 +126,11 @@ namespace aircraft.Services.Airplane
             } while (continute);
         }
 
-        public static Models.Airplane _GetAirplaneDetails(string code)
+        public static Models.Customer _GetCustomerDetails(string code)
         {
-            List<Models.Airplane> airplaneList = __GetAirplaneList();
-            Models.Airplane airplane = airplaneList.FirstOrDefault(ap => ap.PlaneCode == code);
-            return airplane;
+            List<Models.Customer> CustomerList = __GetCustomerList();
+            Models.Customer Customer = CustomerList.FirstOrDefault(ap => ap.CMND == code);
+            return Customer;
         }
     }
 }

@@ -35,8 +35,8 @@ namespace aircraft.Databases.Customer
         private static string GenerateFullName()
         {
             Random random = new Random();
-            string[] firstNames = { "Nguyen", "Tran", "Le", "Pham", "Vo", "Bui" };
-            string[] lastNames = { "Phuong", "Khanh", "Thuan", "Huong", "Phuoc", "Trinh" };
+            string[] firstNames = { "Nguyen", "Tran", "Le", "Pham", "Vo", "Bui", "Dang", "Do", "Ngo", "Ho", "Phan" };
+            string[] lastNames = { "Phuong", "Khanh", "Thuan", "Huong", "Phuoc", "Trinh", "Dang", "Ha", "Minh", "Tuan", "Quang" };
 
             string fullName = $"{firstNames[random.Next(firstNames.Length)]} {lastNames[random.Next(lastNames.Length)]}";
             return fullName;

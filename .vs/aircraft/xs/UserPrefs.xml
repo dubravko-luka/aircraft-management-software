@@ -1,15 +1,12 @@
 ﻿<Properties StartupConfiguration="{F8FF397C-5BC9-4DC7-8F56-E57E3CB9F734}|Default">
   <MonoDevelop.Ide.ItemProperties.aircraft PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="aircraft/Services/Airplane/FlightManagement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="aircraft/Helpers/Common.cs">
     <Files>
-      <File FileName="aircraft/Routers/router.cs" Line="62" Column="78" />
-      <File FileName="aircraft/Components/Menu/Config.cs" />
-      <File FileName="aircraft/Services/Airplane/FlightManagement.cs" Line="241" Column="57" />
-      <File FileName="aircraft/Services/Airplane/AirplaneManagement.cs" />
-      <File FileName="aircraft/Helpers/Constants.cs" />
+      <File FileName="aircraft/Routers/router.cs" Line="59" Column="54" />
+      <File FileName="aircraft/Components/Menu/Config.cs" Line="36" Column="50" />
+      <File FileName="aircraft/Services/Ticket/TicketManagement.cs" Line="372" Column="54" />
+      <File FileName="aircraft/Services/Customer/CustomerManagement.cs" Line="37" Column="52" />
       <File FileName="aircraft/Helpers/Common.cs" />
-      <File FileName="aircraft/Databases/Airplanes/Flight.cs" />
-      <File FileName="aircraft/Databases/Airplanes/Airplane.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -24,14 +21,16 @@
                 <Node name="Auth" expanded="True" />
                 <Node name="Customer" expanded="True" />
               </Node>
-              <Node name="Helpers" expanded="True" />
+              <Node name="Helpers" expanded="True">
+                <Node name="Common.cs" selected="True" />
+              </Node>
               <Node name="Models" expanded="True" />
               <Node name="Routers" expanded="True" />
               <Node name="Services" expanded="True">
-                <Node name="Airplane" expanded="True">
-                  <Node name="FlightManagement.cs" selected="True" />
-                </Node>
+                <Node name="Airplane" expanded="True" />
                 <Node name="Auth" expanded="True" />
+                <Node name="Customer" expanded="True" />
+                <Node name="Ticket" expanded="True" />
               </Node>
             </Node>
           </Node>

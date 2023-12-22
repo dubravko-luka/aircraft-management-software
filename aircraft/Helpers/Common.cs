@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace aircraft.Helpers
@@ -150,9 +152,10 @@ namespace aircraft.Helpers
             return $"|{padSides(str, 48)}|";
         }
 
-        public static void DrawTable(string[] headers, string[,] rowData, int padSidesLength = 24)
+        public static void DrawTable(string[] headers, string[,] rowData, int padSidesLength = 24, Tuple<int, int, ConsoleColor>[] coloredCells = null)
         {
             int columns = headers.Length;
+            int windowWidth = Console.WindowWidth;
             int rows = rowData.GetLength(0);
             int rowLength = (columns * padSidesLength) + (columns + 1);
 
@@ -164,18 +167,38 @@ namespace aircraft.Helpers
                 headerRow += Common.padSides(header, padSidesLength) + "|";
             }
 
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Common.printStringCenterAfter(horizontalLine, 0);
             Common.printStringCenterAfter(headerRow, 0);
             Common.printStringCenterAfter(horizontalLine, 0);
+            Console.ResetColor();
 
             for (int i = 0; i < rows; i++)
             {
-                string dataRow = "|";
+                Console.SetCursorPosition((windowWidth - horizontalLine.Length) / 2, Console.CursorTop);
+                Console.Write("|");
                 for (int j = 0; j < columns; j++)
                 {
-                    dataRow += Common.padSides(rowData[i, j], padSidesLength) + "|";
+                    bool isColored = coloredCells != null && coloredCells.Any(c => c.Item1 == i && c.Item2 == j);
+                    if (isColored)
+                    {
+                        Tuple<int, int, ConsoleColor> cell = coloredCells.First(c => c.Item1 == i && c.Item2 == j);
+                        ConsoleColor cellColor = cell.Item3;
+                        Console.ForegroundColor = cellColor;
+                    }
+
+                    Console.Write($"{Common.padSides(rowData[i, j], padSidesLength)}");
+                    Console.ResetColor();
+
+                    if (j < columns - 1)
+                    {
+                        Console.Write("|");
+                    } else
+                    {
+                        Console.WriteLine("|");
+                    }
+
                 }
-                Common.printStringCenterAfter(dataRow, 0);
                 Common.printStringCenterAfter(horizontalLine, 0);
             }
         }

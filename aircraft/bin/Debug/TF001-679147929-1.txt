@@ -1,0 +1,5 @@
+Ticket Code: TF001-679147929-1
+Flight Code: F001
+Customer ID: 679147929
+Customer Name: Ho Quang
+Seat Number: 1

@@ -69,6 +69,37 @@ namespace aircraft.Components.Menu
             return 0;
         }
 
+        public static int CustomerMenu(string message = "")
+        {
+            PrintCenteredMenu("Quan ly khach hang", Config.CUSTOMER_MENU_LIST.ToArray(), message);
+            string userInput = Console.ReadLine();
+            if (Common.IsNumeric(userInput))
+            {
+                int choice = int.Parse(userInput);
+
+                if (Common.checkIsBack(choice))
+                {
+                    return 0;
+                }
+                else
+                {
+                    if (CheckValidSelectMenu(choice, Config.CUSTOMER_MENU_LIST))
+                    {
+                        return choice;
+                    }
+                    else
+                    {
+                        CustomerMenu("Lua chon khong hop le");
+                    }
+                }
+            }
+            else
+            {
+                CustomerMenu("Lua chon khong hop le");
+            }
+            return 0;
+        }
+
         public static int FlightMenu(string message = "")
         {
             PrintCenteredMenu("Quan ly chuyen bay", Config.FLIGHT_MENU_LIST.ToArray(), message);
@@ -95,6 +126,37 @@ namespace aircraft.Components.Menu
             else
             {
                 FlightMenu("Lua chon khong hop le");
+            }
+            return 0;
+        }
+
+        public static int TicketMenu(string message = "")
+        {
+            PrintCenteredMenu("Quan ly ve", Config.TICKET_MENU_LIST.ToArray(), message);
+            string userInput = Console.ReadLine();
+            if (Common.IsNumeric(userInput))
+            {
+                int choice = int.Parse(userInput);
+
+                if (Common.checkIsBack(choice))
+                {
+                    return 0;
+                }
+                else
+                {
+                    if (CheckValidSelectMenu(choice, Config.TICKET_MENU_LIST))
+                    {
+                        return choice;
+                    }
+                    else
+                    {
+                        TicketMenu("Lua chon khong hop le");
+                    }
+                }
+            }
+            else
+            {
+                TicketMenu("Lua chon khong hop le");
             }
             return 0;
         }

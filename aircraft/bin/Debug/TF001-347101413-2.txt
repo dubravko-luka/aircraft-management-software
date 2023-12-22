@@ -1,0 +1,5 @@
+Ticket Code: TF001-347101413-2
+Flight Code: F001
+Customer ID: 347101413
+Customer Name: Dang Dang
+Seat Number: 2

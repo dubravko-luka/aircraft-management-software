@@ -22,27 +22,49 @@ namespace aircraft.Routers
                 switch (choice)
                 {
                     case 1:
-                        //vehicleService.create();
+                        DirectionTicketMenu();
                         break;
                     case 2:
-                        //vehicleService.delete();
-                        break;
-                    case 3:
                         DirectionFlightMenu();
                         break;
-                    case 4:
+                    case 3:
                         DirectionAirplaneMenu();
                         break;
-                    case 5:
-                        //vehicleService.edit();
-                        break;
-                    case 6:
-                        //vehicleService.read();
+                    case 4:
+                        DirectionCustomerMenu();
                         break;
                     default:
                         break;
                 }
             }
+        }
+
+        public static void DirectionTicketMenu()
+        {
+            int choice = 0;
+
+            do
+            {
+                choice = Components.Menu.Menu.TicketMenu();
+                Console.Clear();
+                switch (choice)
+                {
+                    case 1:
+                        Services.Ticket.TicketManagement.BookTicket();
+                        break;
+                    case 2:
+                        Services.Ticket.TicketManagement.DetailTicket();
+                        break;
+                    case 3:
+                        Services.Ticket.TicketManagement.TicketList();
+                        break;
+                    case 4:
+                        Services.Ticket.TicketManagement.CancelTicket();
+                        break;
+                    default:
+                        break;
+                }
+            } while (choice != 0);
         }
 
         public static void DirectionFlightMenu()
@@ -56,7 +78,7 @@ namespace aircraft.Routers
                 switch (choice)
                 {
                     case 1:
-                        Services.Airplane.FlightManagement.GetFlightList(); ;
+                        Services.Airplane.FlightManagement.GetFlightList();
                         break;
                     case 2:
                         Services.Airplane.FlightManagement.GetFlightDetails();
@@ -88,6 +110,28 @@ namespace aircraft.Routers
                         break;
                     case 2:
                         Services.Airplane.AirplaneManagement.GetAirplaneDetails();
+                        break;
+                    default:
+                        break;
+                }
+            } while (choice != 0);
+        }
+
+        public static void DirectionCustomerMenu()
+        {
+            int choice = 0;
+
+            do
+            {
+                choice = Components.Menu.Menu.CustomerMenu();
+                Console.Clear();
+                switch (choice)
+                {
+                    case 1:
+                        Services.Customer.CustomerManagement.GetCustomerList();
+                        break;
+                    case 2:
+                        Services.Customer.CustomerManagement.GetCustomerDetails();
                         break;
                     default:
                         break;
