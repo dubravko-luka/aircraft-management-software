@@ -18,6 +18,13 @@ namespace aircraft.Services.Auth
             Common.PrintCenteredText(message, -20);
             Console.ResetColor();
             Common.PrintCenteredText("Dang nhap he thong", 8);
+            if (loginFail - 1 > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Common.PrintCenteredText($"Ban da nhap sai {loginFail - 1} lan", -22);
+                Console.ResetColor();
+            }
+
             UserInterface.DrawCenteredInputFields(width, height);
 
             int left = (Console.WindowWidth - width) / 2;
@@ -33,7 +40,6 @@ namespace aircraft.Services.Auth
             {
                 if (!Authenticate(username, password))
                 {
-                    Console.WriteLine($"loginFail {loginFail}");
                     if (loginFail == 3)
                     {
                         Console.Clear();
@@ -50,7 +56,7 @@ namespace aircraft.Services.Auth
                         Common.checkIsQuit(0);
                     } else
                     {
-                        Login($"Tai khoan hoac mat khau khong chinh xac! {loginFail}", loginFail + 1);
+                        Login($"Tai khoan hoac mat khau khong chinh xac!", loginFail + 1);
                     }
                 }
             } else

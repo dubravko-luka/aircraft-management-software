@@ -303,13 +303,13 @@ namespace aircraft.Services.Ticket
                             _CancelTicket(filePath, flightCode, int.Parse(seatNum));
                             Console.Clear();
                             Common.PrintCenteredText("Da xoa ve thanh cong! Xin cam on!");
-                            Thread.Sleep(1000);
+                            Thread.Sleep(500);
                         }
                         else
                         {
                             Console.Clear();
                             Common.PrintCenteredText("Da tu choi xoa! Xin cam on!");
-                            Thread.Sleep(1000);
+                            Thread.Sleep(500);
                         }
                     }
                 }

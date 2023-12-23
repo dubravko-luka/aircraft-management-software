@@ -13,7 +13,7 @@ namespace aircraft.Databases
             checkAirplaneData();
             checkFlightData();
             checkCustomerData();
-            //GenerateData();
+            GenerateData();
         }
 
         private static void checkAdminData ()

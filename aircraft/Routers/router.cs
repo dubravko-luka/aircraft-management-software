@@ -33,6 +33,9 @@ namespace aircraft.Routers
                     case 4:
                         DirectionCustomerMenu();
                         break;
+                    case 0:
+                        Common.checkIsQuit(0);
+                        break;
                     default:
                         break;
                 }

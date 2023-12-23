@@ -11,11 +11,11 @@ namespace aircraft
         {
             Databases.Init.generateData();
 
-            //if (Services.Auth.AdminLogin.Login())
-            //{
+            if (Services.Auth.AdminLogin.Login())
+            {
                 new Routers.router();
                 Routers.router.DirectionMainMenu();
-            //}
+            }
         }
     }
 }

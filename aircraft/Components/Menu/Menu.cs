@@ -12,153 +12,250 @@ namespace aircraft.Components.Menu
             new Config();
         }
 
-        public static int MainMenu(string message = "")
+        public static int MainMenu()
         {
-            PrintCenteredMenu("MENU", Config.MAIN_MENU_LIST.ToArray(), message);
-            string userInput = Console.ReadLine();
-            if (Common.IsNumeric(userInput))
+            try
             {
-                int choice = int.Parse(userInput);
-
-                if (!Common.checkIsQuit(choice))
+                string message = "";
+                int choice = -1;
+                bool validInput = false;
+                do
                 {
-                    if (CheckValidSelectMenu(choice, Config.MAIN_MENU_LIST))
+                    PrintCenteredMenu("MENU", Config.MAIN_MENU_LIST.ToArray(), message);
+                    string userInput = Console.ReadLine();
+
+                    if (Common.IsNumeric(userInput))
                     {
-                        return choice;
+                        choice = int.Parse(userInput);
+
+                        if (Common.checkIsBack(choice))
+                        {
+                            validInput = true;
+                        }
+                        else
+                        {
+                            if (CheckValidSelectMenu(choice, Config.MAIN_MENU_LIST))
+                            {
+                                validInput = true;
+                            }
+                            else
+                            {
+                                message = "Lua chon khong hop le";
+                                validInput = false;
+                            }
+                        }
                     }
                     else
                     {
-                        MainMenu("Lua chon khong hop le");
+                        message = "Lua chon khong hop le";
+                        validInput = false;
                     }
-                }
+
+                } while (!validInput);
+
+                return choice;
             }
-            else
+            catch (Exception ex)
             {
-                MainMenu("Lua chon khong hop le");
+                return 0;
             }
-            return 1;
         }
 
-        public static int AirplaneMenu(string message = "")
+        public static int AirplaneMenu()
         {
-            PrintCenteredMenu("Quan ly may bay", Config.AIRPLANE_MENU_LIST.ToArray(), message);
-            string userInput = Console.ReadLine();
-            if (Common.IsNumeric(userInput))
+            try
             {
-                int choice = int.Parse(userInput);
+                string message = "";
+                int choice = -1;
+                bool validInput = false;
+                do
+                {
+                    PrintCenteredMenu("Quan ly may bay", Config.AIRPLANE_MENU_LIST.ToArray(), message);
+                    string userInput = Console.ReadLine();
 
-                if (Common.checkIsBack(choice))
-                {
-                    return 0;
-                } else
-                {
-                    if (CheckValidSelectMenu(choice, Config.AIRPLANE_MENU_LIST))
+                    if (Common.IsNumeric(userInput))
                     {
-                        return choice;
+                        choice = int.Parse(userInput);
+
+                        if (Common.checkIsBack(choice))
+                        {
+                            validInput = true;
+                        }
+                        else
+                        {
+                            if (CheckValidSelectMenu(choice, Config.AIRPLANE_MENU_LIST))
+                            {
+                                validInput = true;
+                            }
+                            else
+                            {
+                                message = "Lua chon khong hop le";
+                                validInput = false;
+                            }
+                        }
                     }
                     else
                     {
-                        AirplaneMenu("Lua chon khong hop le");
+                        message = "Lua chon khong hop le";
+                        validInput = false;
                     }
-                }
+
+                } while (!validInput);
+
+                return choice;
             }
-            else
+            catch (Exception ex)
             {
-                AirplaneMenu("Lua chon khong hop le");
+                return 0;
             }
-            return 0;
         }
 
-        public static int CustomerMenu(string message = "")
+        public static int CustomerMenu()
         {
-            PrintCenteredMenu("Quan ly khach hang", Config.CUSTOMER_MENU_LIST.ToArray(), message);
-            string userInput = Console.ReadLine();
-            if (Common.IsNumeric(userInput))
+            try
             {
-                int choice = int.Parse(userInput);
+                string message = "";
+                int choice = -1;
+                bool validInput = false;
+                do
+                {
+                    PrintCenteredMenu("Quan ly khach hang", Config.CUSTOMER_MENU_LIST.ToArray(), message);
+                    string userInput = Console.ReadLine();
 
-                if (Common.checkIsBack(choice))
-                {
-                    return 0;
-                }
-                else
-                {
-                    if (CheckValidSelectMenu(choice, Config.CUSTOMER_MENU_LIST))
+                    if (Common.IsNumeric(userInput))
                     {
-                        return choice;
+                        choice = int.Parse(userInput);
+
+                        if (Common.checkIsBack(choice))
+                        {
+                            validInput = true;
+                        }
+                        else
+                        {
+                            if (CheckValidSelectMenu(choice, Config.CUSTOMER_MENU_LIST))
+                            {
+                                validInput = true;
+                            }
+                            else
+                            {
+                                message = "Lua chon khong hop le";
+                                validInput = false;
+                            }
+                        }
                     }
                     else
                     {
-                        CustomerMenu("Lua chon khong hop le");
+                        message = "Lua chon khong hop le";
+                        validInput = false;
                     }
-                }
+
+                } while (!validInput);
+
+                return choice;
             }
-            else
+            catch (Exception ex)
             {
-                CustomerMenu("Lua chon khong hop le");
+                return 0;
             }
-            return 0;
         }
 
-        public static int FlightMenu(string message = "")
+        public static int FlightMenu()
         {
-            PrintCenteredMenu("Quan ly chuyen bay", Config.FLIGHT_MENU_LIST.ToArray(), message);
-            string userInput = Console.ReadLine();
-            if (Common.IsNumeric(userInput))
+            try
             {
-                int choice = int.Parse(userInput);
+                string message = "";
+                int choice = -1;
+                bool validInput = false;
+                do
+                {
+                    PrintCenteredMenu("Quan ly chuyen bay", Config.FLIGHT_MENU_LIST.ToArray(), message);
+                    string userInput = Console.ReadLine();
 
-                if (Common.checkIsBack(choice))
-                {
-                    return 0;
-                } else
-                {
-                    if (CheckValidSelectMenu(choice, Config.FLIGHT_MENU_LIST))
+                    if (Common.IsNumeric(userInput))
                     {
-                        return choice;
+                        choice = int.Parse(userInput);
+
+                        if (Common.checkIsBack(choice))
+                        {
+                            validInput = true;
+                        }
+                        else
+                        {
+                            if (CheckValidSelectMenu(choice, Config.FLIGHT_MENU_LIST))
+                            {
+                                validInput = true;
+                            }
+                            else
+                            {
+                                message = "Lua chon khong hop le";
+                                validInput = false;
+                            }
+                        }
                     }
                     else
                     {
-                        FlightMenu("Lua chon khong hop le");
+                        message = "Lua chon khong hop le";
+                        validInput = false;
                     }
-                }
+
+                } while (!validInput);
+
+                return choice;
+
             }
-            else
+            catch (Exception ex)
             {
-                FlightMenu("Lua chon khong hop le");
+                return 0;
             }
-            return 0;
         }
 
-        public static int TicketMenu(string message = "")
+        public static int TicketMenu()
         {
-            PrintCenteredMenu("Quan ly ve", Config.TICKET_MENU_LIST.ToArray(), message);
-            string userInput = Console.ReadLine();
-            if (Common.IsNumeric(userInput))
+            try
             {
-                int choice = int.Parse(userInput);
+                string message = "";
+                int choice = -1;
+                bool validInput = false;
+                do
+                {
+                    PrintCenteredMenu("Quan ly ve", Config.TICKET_MENU_LIST.ToArray(), message);
+                    string userInput = Console.ReadLine();
 
-                if (Common.checkIsBack(choice))
-                {
-                    return 0;
-                }
-                else
-                {
-                    if (CheckValidSelectMenu(choice, Config.TICKET_MENU_LIST))
+                    if (Common.IsNumeric(userInput))
                     {
-                        return choice;
+                        choice = int.Parse(userInput);
+
+                        if (Common.checkIsBack(choice))
+                        {
+                            validInput = true;
+                        }
+                        else
+                        {
+                            if (CheckValidSelectMenu(choice, Config.TICKET_MENU_LIST))
+                            {
+                                validInput = true;
+                            }
+                            else
+                            {
+                                message = "Lua chon khong hop le";
+                                validInput = false;
+                            }
+                        }
                     }
                     else
                     {
-                        TicketMenu("Lua chon khong hop le");
+                        message = "Lua chon khong hop le";
+                        validInput = false;
                     }
-                }
+
+                } while (!validInput);
+
+                return choice;
             }
-            else
+            catch (Exception ex)
             {
-                TicketMenu("Lua chon khong hop le");
+                return 0;
             }
-            return 0;
         }
 
         static void PrintCenteredMenu(string title, string[] options, string message = "")

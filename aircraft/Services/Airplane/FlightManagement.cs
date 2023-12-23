@@ -344,7 +344,7 @@ namespace aircraft.Services.Airplane
                     else
                     {
                         Console.Clear();
-                        Common.printStringCenterAfter("Da tu choi cap nhat! Xin cam on!");
+                        Common.PrintCenteredText("Da tu choi cap nhat! Xin cam on!");
                     }
                 }
 
@@ -441,7 +441,7 @@ namespace aircraft.Services.Airplane
                     else
                     {
                         Console.Clear();
-                        Common.printStringCenterAfter("Da tu choi cap nhat! Xin cam on!");
+                        Common.PrintCenteredText("Da tu choi cap nhat! Xin cam on!");
                     }
                 }
 

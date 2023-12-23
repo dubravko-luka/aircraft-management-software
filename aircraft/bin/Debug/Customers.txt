@@ -10,4 +10,3 @@
 13,801919676,Nguyen Minh
 14,680127175,Nguyen Ha
 15,795761250,Do Trinh
-16,511964796,Dang Phuoc

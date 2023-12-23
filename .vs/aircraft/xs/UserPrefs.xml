@@ -1,9 +1,18 @@
 ﻿<Properties StartupConfiguration="{F8FF397C-5BC9-4DC7-8F56-E57E3CB9F734}|Default">
   <MonoDevelop.Ide.ItemProperties.aircraft PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="aircraft/Services/Customer/CustomerManagement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="aircraft/Services/Auth/AdminLogin.cs">
     <Files>
-      <File FileName="aircraft/Services/Ticket/TicketManagement.cs" Line="1" Column="1" />
-      <File FileName="aircraft/Services/Customer/CustomerManagement.cs" Line="1" Column="1" />
+      <File FileName="aircraft/Program.cs" Line="18" Column="14" />
+      <File FileName="aircraft/Components/Menu/Config.cs" />
+      <File FileName="aircraft/Databases/Init.cs" />
+      <File FileName="aircraft/Services/Ticket/TicketManagement.cs" />
+      <File FileName="aircraft/Routers/router.cs" />
+      <File FileName="aircraft/Services/Auth/AdminLogin.cs" Line="59" Column="73" />
+      <File FileName="aircraft/Services/Auth/UserInterface.cs" />
+      <File FileName="aircraft/Components/Menu/Menu.cs" />
+      <File FileName="aircraft/Services/Customer/CustomerManagement.cs" />
+      <File FileName="aircraft/Services/Airplane/AirplaneManagement.cs" />
+      <File FileName="aircraft/Services/Airplane/FlightManagement.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,20 +22,15 @@
               <Node name="Components" expanded="True">
                 <Node name="Menu" expanded="True" />
               </Node>
-              <Node name="Databases" expanded="True">
-                <Node name="Airplanes" expanded="True" />
-                <Node name="Auth" expanded="True" />
-                <Node name="Customer" expanded="True" />
-              </Node>
+              <Node name="Databases" expanded="True" />
               <Node name="Helpers" expanded="True" />
-              <Node name="Models" expanded="True" />
               <Node name="Routers" expanded="True" />
               <Node name="Services" expanded="True">
                 <Node name="Airplane" expanded="True" />
-                <Node name="Auth" expanded="True" />
-                <Node name="Customer" expanded="True">
-                  <Node name="CustomerManagement.cs" selected="True" />
+                <Node name="Auth" expanded="True">
+                  <Node name="AdminLogin.cs" selected="True" />
                 </Node>
+                <Node name="Customer" expanded="True" />
                 <Node name="Ticket" expanded="True" />
               </Node>
             </Node>
